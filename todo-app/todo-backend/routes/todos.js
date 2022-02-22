@@ -15,7 +15,32 @@ router.post('/', async (req, res) => {
     text: req.body.text,
     done: false
   })
+
+  const getCounter = await redis.getAsync("added_todos");
+
+  if (getCounter) {
+    await redis.setAsync("added_todos", Number(getCounter) + 1 );
+  }
+  else {
+    await redis.setAsync("added_todos", 1);
+  }
+  //redis.setAsync("added_todos", )
   res.send(todo);
+});
+
+router.get('/statistics', async (_, res) => {
+  const counter = await redis.getAsync("added_todos");
+  if (counter) {
+    res.send({
+      "added_todos": counter
+    });
+  }
+  else {
+    const newC = await redis.setAsync("added_todos", 1);
+    res.send({
+      "added_todos": 1
+    });
+  }
 });
 
 const singleRouter = express.Router();
@@ -30,7 +55,7 @@ const findByIdMiddleware = async (req, res, next) => {
 
 /* DELETE todo. */
 singleRouter.delete('/', async (req, res) => {
-  await req.todo.delete()  
+  await req.todo.delete()
   res.sendStatus(200);
 });
 
