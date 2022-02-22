@@ -36,9 +36,9 @@ router.get('/statistics', async (_, res) => {
     });
   }
   else {
-    const newC = await redis.setAsync("added_todos", 1);
+    const newC = await redis.setAsync("added_todos", 0);
     res.send({
-      "added_todos": 1
+      "added_todos": 0
     });
   }
 });
