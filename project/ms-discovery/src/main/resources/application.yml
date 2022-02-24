@@ -1,0 +1,16 @@
+#spring:
+#  application:
+#    name: ms-discovery
+
+server:
+  port: 9003
+
+#eureka:
+#  client:
+#    fetch-registry: false
+#    register-with-eureka: false
+#    serviceUrl:
+#      defaultZone: http://localhost:8762/eureka
+#  server:
+#    enable-self-preservation: false
+#    eviction-interval-timer-in-ms: 30000

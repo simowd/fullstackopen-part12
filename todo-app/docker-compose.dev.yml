@@ -1,37 +1,37 @@
 version: '3.8'
 services:
-  # mongo:
-  #   image: mongo
-  #   ports:
-  #     - 3456:27017
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: root
-  #     MONGO_INITDB_ROOT_PASSWORD: example
-  #     MONGO_INITDB_DATABASE: the_database
-  #   volumes:
-  #     - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
-  #     - ./mongo_data:/data/db
-  # redis:
-  #   image: redis
-  #   ports:
-  #     - 6379:6379
-  #   command: [ 'redis-server', '--appendonly', 'yes' ]
-  #   volumes:
-  #     # Declare the volume
-  #     - ./redis_data:/data
-  # backend-app:
-  #   image: todo-app-backend
-  #   build:
-  #     context: .
-  #     dockerfile: todo-backend/Dockerfile
-  #   container_name: todo-app-backend
-  #   volumes:
-  #     - ./todo-backend:/usr/src/app
-  #   ports:
-  #     - 3000:3000
-  #   environment:
-  #     - REDIS_URL=//redis:6379
-  #     - MONGO_URL=mongodb://the_username:the_password@mongo:27017/the_database
+  mongo:
+    image: mongo
+    ports:
+      - 3456:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: the_database
+    volumes:
+      - ./todo-backend/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      - ./todo-backend/mongo_data:/data/db
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    command: [ 'redis-server', '--appendonly', 'yes' ]
+    volumes:
+      # Declare the volume
+      - ./todo-backend/redis_data:/data
+  backend-app:
+    image: todo-app-backend
+    build:
+      context: ./todo-backend
+      dockerfile: todo-backend/Dockerfile
+    container_name: todo-app-backend
+    volumes:
+      - ./todo-backend:/usr/src/app
+    ports:
+      - 3000:3000
+    environment:
+      - REDIS_URL=//redis:6379
+      - MONGO_URL=mongodb://the_username:the_password@mongo:27017/the_database
   frontend-app:
     build:
       context: ./todo-frontend # The context will pick this directory as the "build context"
@@ -42,7 +42,7 @@ services:
     ports:
       - 3001:3000
     environment:
-      - REACT_APP_BACKEND_URL=http://backend-app:3000
+      - REACT_APP_BACKEND_URL=http://localhost:8080/api/v1/
     container_name: todos-frontend-dev # This will name the container hello-front-dev
   nginx:
       image: nginx:1.20.1

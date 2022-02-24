@@ -1,0 +1,37 @@
+server:
+  port: 9005
+#spring:
+#  application:
+#    name: '{cipher}594741ad7499193eb6175f571f92e28d7a374d2e9ecc4fe238c6029e627803c4'
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: service_customer
+#          uri: lb://MS-CUSTOMER
+#          predicates:
+#            - Path=/ms-customer/**
+#          filters:
+#            - RewritePath=/ms-customer/?(?<remaining>.*), /$\{remaining}
+#        - id: service_product
+#          uri: lb://MS-PRODUCT
+#          predicates:
+#            - Path=/ms-product/**
+#          filters:
+#            - RewritePath=/ms-product/?(?<remaining>.*), /$\{remaining}
+#        - id: service_sale
+#          uri: lb://MS-SALE
+#          predicates:
+#            - Path=/ms-sale/**
+#          filters:
+#            - RewritePath=/ms-sale/?(?<remaining>.*), /$\{remaining}
+#          #discovery:
+#          #locator:
+#          #enabled: true
+#          #lower-case-service-id: true
+#      default-filters:
+#        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+#      globalcors:
+#        corsConfigurations:
+#          '[/**]':
+#            allowedOrigins: "*"
+#            allowedMethods: "*"

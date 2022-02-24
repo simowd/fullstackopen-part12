@@ -1,0 +1,22 @@
+FROM azul/zulu-openjdk:11.0.12
+RUN apt update
+RUN apt -y install wget curl
+RUN wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
+RUN mkdir -p /opt/arquitectura/logs
+VOLUME /opt/arquitectura/logs
+
+ARG DEPENDENCY=target/dependency
+COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY ${DEPENDENCY}/META-INF /app/META-INF
+COPY ${DEPENDENCY}/BOOT-INF/classes /app
+
+ENV SPRING_PROFILE local
+ENV SERVER_PORT 6945
+ENV EUREKA_URI "http:localhost:8762/eureka"
+ENV ZIPKIN_URI "http:localhost:9411"
+ENV CONFIG_SERVER "http://localhost:8889"
+
+ENTRYPOINT ["java", \
+            "-cp", \
+            "app:app/lib/*", \
+            "arquitectura.software.mssale.MsSaleApplication"]

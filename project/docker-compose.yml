@@ -1,0 +1,121 @@
+version: "2.4"
+
+networks:
+    software:
+        name: network-arquitectura
+        ipam:
+            driver: default
+            config:
+                - subnet: "172.30.0.0/16"
+                  gateway: "172.30.0.1"
+    arquitectura:
+        name: network-config-server
+        external: true
+
+volumes:
+    ms-data:
+
+services:
+    ms-discovery:
+        image: ms-discovery:0.0.1
+        mem_limit: 512m
+        environment:
+            - "EUREKA_URI=http://ms-discovery:8762/eureka"
+            #- "EUREKA_URI=http://192.168.0.10:8762/eureka"
+            - "SERVER:PORT=8743"
+            - "CONFIG_SERVER=http://ms-config-server:8889"
+            #- "CONFIG_SERVER=http://192.168.0.10:8889"
+            - "ZIPKIN_URI=http://zipkin:9411"
+        healthcheck:
+            test: ["CMD", "curl","-f","http://localhost:8762/"]
+            interval: 30s
+            timeout: 30s
+            retries: 5
+            start_period: 15s
+        ports:
+            - "8762:8762"
+        volumes:
+            - ms-data:/opt/arquitectura/logs
+        networks:
+            - software
+            - arquitectura
+    ms-gateway:
+        image: ms-gateway:0.0.1
+        mem_limit: 350m
+        environment:
+            - "EUREKA_URI=http://ms-discovery:8762/eureka"
+            #- "EUREKA_URI=http://192.168.0.10:8762/eureka"
+            - "SERVER:PORT=8743"
+            - "CONFIG_SERVER=http://ms-config-server:8889"
+            #- "CONFIG_SERVER=http://192.168.0.10:8889"
+            - "ZIPKIN_URI=http://zipkin:9411"
+        depends_on:
+            ms-discovery:
+                condition: service_healthy
+        ports:
+            - "8181:8181"
+        volumes:
+            - ms-data:/opt/arquitectura/logs
+        networks:
+            - software
+            - arquitectura
+    ms-customer:
+        image: ms-customer:0.0.1
+        mem_limit: 350m
+        environment:
+            - "EUREKA_URI=http://ms-discovery:8762/eureka"
+            #- "EUREKA_URI=http://192.168.0.10:8762/eureka"
+            - "SERVER:PORT=8743"
+            - "CONFIG_SERVER=http://ms-config-server:8889"
+            #- "CONFIG_SERVER=http://192.168.0.10:8889"
+            - "ZIPKIN_URI=http://zipkin:9411"
+        depends_on:
+            ms-discovery:
+                condition: service_healthy
+        ports:
+            - "6945:6945"
+        volumes:
+            - ms-data:/opt/arquitectura/logs
+        networks:
+            - software
+            - arquitectura
+    ms-product:
+        image: ms-product:0.0.1
+        mem_limit: 350m
+        environment:
+            - "EUREKA_URI=http://ms-discovery:8762/eureka"
+            #- "EUREKA_URI=http://192.168.0.10:8762/eureka"
+            - "SERVER:PORT=8743"
+            - "CONFIG_SERVER=http://ms-config-server:8889"
+            #- "CONFIG_SERVER=http://192.168.0.10:8889"
+            - "ZIPKIN_URI=http://zipkin:9411"
+        depends_on:
+            ms-discovery:
+                condition: service_healthy
+        ports:
+            - "7878:7878"
+        volumes:
+            - ms-data:/opt/arquitectura/logs
+        networks:
+            - software
+            - arquitectura
+    ms-sale:
+        image: ms-sale:0.0.1
+        mem_limit: 350m
+        environment:
+            - "EUREKA_URI=http://ms-discovery:8762/eureka"
+            #- "EUREKA_URI=http://192.168.0.10:8762/eureka"
+            - "SERVER:PORT=8743"
+            - "CONFIG_SERVER=http://ms-config-server:8889"
+            #- "CONFIG_SERVER=http://192.168.0.10:8889"
+            - "ZIPKIN_URI=http://zipkin:9411"
+        depends_on:
+            ms-discovery:
+                condition: service_healthy
+        ports:
+            - "8743:8743"
+        volumes:
+            - ms-data:/opt/arquitectura/logs
+        networks:
+            - software
+            - arquitectura

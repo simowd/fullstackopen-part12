@@ -1,0 +1,39 @@
+version: "2.4"
+
+networks:
+    arquitectura:
+        name: network-config-server
+        ipam:
+            driver: default
+            config:
+                - subnet: "172.27.0.0/16"
+                  gateway: "172.27.0.1"
+
+volumes:
+    ms-data:
+
+services:
+    zipkin:
+        image: openzipkin/zipkin
+        ports:
+            - "9411:9411"
+        networks:
+            - arquitectura
+    ms-config-server:
+        image: ms-config-server:0.0.1
+        mem_limit: 350m
+        healthcheck:
+            test: ["CMD", "curl","-f","http://localhost:8889/actuator/health"]
+            interval: 30s
+            timeout: 30s
+            retries: 5
+            start_period: 0s
+        ports:
+            - "8889:8889"
+        depends_on:
+            zipkin:
+                condition: service_started
+        volumes:
+            - ms-data:/opt/arquitectura/logs
+        networks:
+            - arquitectura

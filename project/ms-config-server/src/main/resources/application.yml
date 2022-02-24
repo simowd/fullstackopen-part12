@@ -1,0 +1,25 @@
+server:
+  port: ${SERVER_PORT:8889}
+spring:
+  application:
+    name: ms-config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: git@github.com:simowd/config-server.git
+          clone-on-start: true
+          default-label: "main"
+          ignore-local-ssh-settings: true
+          hostKeyAlgorithm: ssh-rsa
+          hostKey: #your host key
+          privateKey: #your key
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+encrypt:
+  key: SoLongThenYouHeadToMexicoBeforeYouBounceBounceBounceManComeToTheHouseMan

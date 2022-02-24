@@ -1,0 +1,301 @@
+{
+	"info": {
+		"_postman_id": "81832c3a-3b61-417a-8f62-34dbd999dd9f",
+		"name": "arquitectura-proyecto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ms-customer",
+			"item": [
+				{
+					"name": "New Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Martin\",\n    \"lastName\": \"Campuzano\",\n    \"email\": \"martin.campuzano.flores@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8181/ms-customer/v1/api/customer/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"ms-customer",
+								"v1",
+								"api",
+								"customer",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8181/ms-customer/v1/api/customer/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"ms-customer",
+								"v1",
+								"api",
+								"customer",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One Customer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8181/ms-customer/v1/api/customer?customerId=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"ms-customer",
+								"v1",
+								"api",
+								"customer"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ms-product",
+			"item": [
+				{
+					"name": "New Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"enpitsu\",\n    \"price\": 2000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8181/ms-product/v1/api/product/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"ms-product",
+								"v1",
+								"api",
+								"product",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8181/ms-product/v1/api/product/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"ms-product",
+								"v1",
+								"api",
+								"product",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productId\":1,\n    \"name\":\"shapupenshiru\",\n    \"price\":3000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8181/ms-product/v1/api/product",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"ms-product",
+								"v1",
+								"api",
+								"product"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ms-sale",
+			"item": [
+				{
+					"name": "New Sell",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productId\" : 1,\n    \"customerId\" : 1,\n    \"quantity\" : 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8181/ms-sale/v1/api/sale/sell",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"ms-sale",
+								"v1",
+								"api",
+								"sale",
+								"sell"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sale Per Customer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8181/ms-sale/v1/api/sale?customerId=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"ms-sale",
+								"v1",
+								"api",
+								"sale"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all customer Sales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8181/ms-sale/v1/api/sale/sell/all?customerId=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"ms-sale",
+								"v1",
+								"api",
+								"sale",
+								"sell",
+								"all"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete All Customer Sales",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8181/ms-sale/v1/api/sale?customerId=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"ms-sale",
+								"v1",
+								"api",
+								"sale"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

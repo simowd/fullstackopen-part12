@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: ms-sale
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER:http://localhost:8889}
